@@ -1,0 +1,6 @@
+{
+    "liveServer.settings.port": 5504,
+    "liveServer.settings.cors": false,
+    "liveServer.settings.useLocalIp": true,
+    "liveServer.settings.useWebExt": true
+}
