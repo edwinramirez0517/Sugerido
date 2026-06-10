@@ -314,7 +314,7 @@ $(document).ready(function () {
     function mostrarCargaManual() { $('#fallbackCargaManual').removeClass('d-none'); }
 
     function cargarCSVAutomatico() {
-        let rutaZip = './invetario.zip'; 
+        let rutaZip = './data/invetario.zip'; 
 
         fetch(rutaZip)
             .then(function(response) {
