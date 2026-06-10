@@ -620,31 +620,69 @@ $(document).ready(function () {
         $('#fallbackCargaManual').removeClass('d-none');
     }
 
+    // === NUEVA FUNCIÓN PARA CARGAR Y DESCOMPRIMIR EL ZIP AUTOMÁTICAMENTE ===
     function cargarCSVAutomatico() {
-        console.log("Cargando y parseando el CSV con PapaParse...");
-        Papa.parse("data/invetario.csv?v=1.0.8", {
-            download: true,
-            header: true,
-            delimiter: ";", // Forzar delimitador por punto y coma (;)
-            bom: true,      // Omitir automáticamente el Byte Order Mark (BOM) si está presente
-            dynamicTyping: true,
-            skipEmptyLines: true,
-            transformHeader: function (header) {
-                return header.trim(); // Limpiar espacios ocultos en los nombres de las columnas
-            },
-            complete: function (results) {
-                console.log("Lectura finalizada.");
-                if (results.errors.length > 0) {
-                    console.warn("Hubo errores al leer algunas líneas:", results.errors);
+        console.log("Descargando y descomprimiendo invetario.zip...");
+        const rutaZip = './invetario.zip'; // Ruta de tu archivo en GitHub
+
+        fetch(rutaZip)
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error("No se pudo descargar el ZIP (HTTP " + response.status + ")");
                 }
-                procesarDatosCSV(results.data);
-            },
-            error: function (err) {
-                console.error("Error crítico de PapaParse al cargar automáticamente:", err);
+                return response.blob();
+            })
+            .then(function(blob) {
+                return JSZip.loadAsync(blob);
+            })
+            .then(function(zip) {
+                // Buscamos dinámicamente el primer archivo que termine en .csv dentro del zip
+                let nombreCSV = null;
+                zip.forEach(function (relativePath, zipEntry) {
+                    if (zipEntry.name.endsWith('.csv')) {
+                        nombreCSV = zipEntry.name;
+                    }
+                });
+
+                if (!nombreCSV) {
+                    throw new Error("No se encontró ningún archivo .csv dentro del ZIP");
+                }
+
+                console.log("CSV encontrado dentro del ZIP:", nombreCSV);
+                // Extraer el texto de ese CSV
+                return zip.file(nombreCSV).async("string");
+            })
+            .then(function(textoCSV) {
+                console.log("Archivo descomprimido con éxito. Parseando con PapaParse...");
+                
+                Papa.parse(textoCSV, {
+                    header: true,
+                    delimiter: ";", // Forzar delimitador por punto y coma (;)
+                    bom: true,      // Omitir automáticamente el Byte Order Mark (BOM)
+                    dynamicTyping: true,
+                    skipEmptyLines: true,
+                    transformHeader: function (header) {
+                        return header.trim();
+                    },
+                    complete: function (results) {
+                        console.log("Lectura finalizada.");
+                        if (results.errors.length > 0) {
+                            console.warn("Hubo errores al leer algunas líneas:", results.errors);
+                        }
+                        procesarDatosCSV(results.data);
+                    },
+                    error: function (err) {
+                        console.error("Error crítico de PapaParse al procesar el texto extraído:", err);
+                        mostrarCargaManual();
+                    }
+                });
+            })
+            .catch(function(error) {
+                console.error("Error al descargar o descomprimir el ZIP:", error);
                 mostrarCargaManual();
-            }
-        });
+            });
     }
+    // =======================================================================
 
     // Verificar si estamos ejecutando bajo el protocolo file://
     if (window.location.protocol === 'file:') {
