@@ -623,7 +623,7 @@ $(document).ready(function () {
     // === NUEVA FUNCIÓN PARA CARGAR Y DESCOMPRIMIR EL ZIP AUTOMÁTICAMENTE ===
     function cargarCSVAutomatico() {
         console.log("Descargando y descomprimiendo invetario.zip...");
-        const rutaZip = './invetario.zip'; // Ruta de tu archivo en GitHub
+        const rutaZip = './data/invetario.zip'; // Ruta de tu archivo en GitHub
 
         fetch(rutaZip)
             .then(function(response) {
