@@ -1,0 +1,209 @@
+/* Variables de color según el manual de identidad corporativa */
+:root {
+    --compadre-red: #E1251B;
+    --compadre-blue: #012094;
+    --vitrina-purple: #6a2a7a;
+    --compadre-orange: #fd7e14;
+    /* Color temático dinámico (por defecto el azul de El Compadre) */
+    --theme-primary: var(--compadre-blue);
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Clases utilitarias de la marca */
+.bg-compadre {
+    background-color: var(--theme-primary) !important;
+    transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.text-compadre {
+    color: var(--theme-primary) !important;
+    transition: color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.border-compadre {
+    border-color: var(--theme-primary) !important;
+    transition: border-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Estilos de la tabla */
+.table-dark th {
+    background-color: var(--theme-primary) !important;
+    color: white;
+    border-color: var(--theme-primary) !important;
+    transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Resaltar celdas de Necesidad si es mayor a 0 */
+.necesidad-alta {
+    color: var(--compadre-red);
+    font-weight: bold;
+}
+
+/* Tarjetas de Indicadores (KPIs) */
+.kpi-card {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: 12px;
+    background: #ffffff;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+.kpi-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.kpi-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6c757d;
+    margin-bottom: 0.25rem;
+}
+
+.kpi-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.kpi-icon {
+    font-size: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* Bordes superiores decorativos de marca */
+.kpi-sugerido {
+    border-top: 4px solid var(--theme-primary) !important;
+    transition: border-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.kpi-saldo {
+    border-top: 4px solid var(--vitrina-purple) !important;
+}
+
+.kpi-necesidad {
+    border-top: 4px solid var(--compadre-red) !important;
+}
+
+.kpi-exceso {
+    border-top: 4px solid var(--compadre-orange) !important;
+}
+
+/* Utilidades de colores */
+.text-purple {
+    color: var(--vitrina-purple) !important;
+}
+
+.bg-purple {
+    background-color: var(--vitrina-purple) !important;
+}
+
+/* Resaltar celdas de Exceso si es mayor a 0 */
+.exceso-alto {
+    color: var(--compadre-orange);
+    font-weight: bold;
+}
+
+.text-orange {
+    color: var(--compadre-orange) !important;
+}
+
+.bg-orange {
+    background-color: var(--compadre-orange) !important;
+}
+
+/* Estilos de las Pestañas (Tabs) Analíticas */
+.nav-tabs {
+    border-bottom: 2px solid #e9ecef;
+}
+
+.nav-tabs .nav-link {
+    color: #6c757d;
+    font-weight: 600;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--theme-primary);
+    background-color: rgba(0, 0, 0, 0.02);
+    border-bottom-color: #dee2e6;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--theme-primary) !important;
+    border-bottom-color: var(--theme-primary) !important;
+    background-color: transparent !important;
+    font-weight: 700;
+}
+
+/* --- Estilos Responsivos y Optimizaciones Móviles --- */
+@media (max-width: 768px) {
+    /* Pestañas analíticas deslizables horizontalmente en móvil (tipo App) */
+    .nav-tabs {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        border-bottom: 2px solid #dee2e6;
+    }
+    .nav-tabs .nav-item {
+        flex: 0 0 auto !important;
+    }
+    /* Ocultar barra de scroll para limpieza visual */
+    .nav-tabs::-webkit-scrollbar {
+        display: none;
+    }
+    .nav-tabs {
+        -ms-overflow-style: none;  /* IE y Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+}
+
+@media (max-width: 576px) {
+    /* Ajustar tamaño de tarjetas KPI en cuadrícula 2x2 */
+    .kpi-card {
+        padding: 0.75rem !important;
+        border-radius: 8px !important;
+    }
+    .kpi-label {
+        font-size: 0.68rem !important;
+        margin-bottom: 0.15rem !important;
+    }
+    .kpi-value {
+        font-size: 1.2rem !important;
+    }
+    .kpi-icon {
+        font-size: 1.5rem !important;
+        width: 38px !important;
+        height: 38px !important;
+    }
+    
+    /* Optimizar legibilidad y espacio en tabla para celular */
+    #tablaInventario {
+        font-size: 0.78rem !important;
+    }
+    #tablaInventario th, #tablaInventario td {
+        padding: 8px 4px !important;
+    }
+    
+    /* Centrar textos de la barra de salud */
+    .progress-bar {
+        font-size: 0.75rem !important;
+    }
+}
