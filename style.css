@@ -174,13 +174,18 @@ body {
 
 /* --- Estilos Responsivos y Optimizaciones Móviles Avanzadas --- */
 
-/* Control de desbordamiento en la tabla para evitar filas gigantes */
+/* Control de texto en la tabla para mostrar nombres completos */
 #tablaInventario td, #tablaInventario th {
-    max-width: 150px;         /* Límite de ancho para que no se estiren */
-    white-space: nowrap;      /* Evita el salto de línea hacia abajo */
-    overflow: hidden;
-    text-overflow: ellipsis;  /* Pone '...' si el texto es muy largo */
+    white-space: normal;      /* Permite que el texto baje a la siguiente línea */
+    word-wrap: break-word;    /* Evita que palabras súper largas rompan el diseño */
+    min-width: 130px;         /* Da un ancho mínimo cómodo para leer */
 }
+
+/* Permitir que las columnas de números sean un poco más estrechas si es necesario */
+#tablaInventario .text-center {
+    min-width: 80px;
+}
+
 
 @media (max-width: 768px) {
     /* Pestañas analíticas deslizables horizontalmente en móvil */
